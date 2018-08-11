@@ -1,8 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import Speech from 'react-speech';
-
 
 class Welcome extends React.Component {
 
@@ -12,16 +9,11 @@ class Welcome extends React.Component {
       info: false,
       checkout: false
     }
-    this.checkout = this.checkout.bind(this);
-  }
-
-  checkout() {
-    this.setState({ checkout: true })
   }
 
   render() {
-    const { user, book } = this.props;
-    const { checkout } = this.state;
+    const { user } = this.props;
+
     if (!user) {
       return null;
     }
@@ -36,11 +28,9 @@ class Welcome extends React.Component {
 }
 
 
-const mapStateToProps = ({ books, user }) => {
-  const book = books.find(book => book.user_id === user.id);
+const mapStateToProps = ({ user }) => {
   return {
-    user,
-    book,
+    user
   };
 };
 

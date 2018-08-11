@@ -4,19 +4,16 @@ import { connect } from 'react-redux';
 
 import { fetchUsers } from '../redux/users';
 import { getLoggedIn } from '../redux/user';
-import { fetchBooks } from '../redux/books';
 
 import Nav from './Nav';
 import Verify from './Verify';
 import Welcome from './Welcome';
-import Hotel from './Hotel';
-import Book from './Book';
+import Main from './Main';
 
 class Root extends React.Component {
 
   componentDidMount() {
     this.props.fetchUsers();
-    this.props.fetchBooks();
     this.props.getLoggedIn();
   }
 
@@ -26,10 +23,9 @@ class Root extends React.Component {
         <Router>
           <div>
             <Nav />
-            <Route exact path='/' component={Hotel} />
+            <Route exact path='/' component={Main} />
             <Route exact path='/verify' render={({ history }) => <Verify history={history} />} />
             <Route exact path='/welcome' render={({ history }) => <Welcome history={history} />} />
-            <Route exact path='/books' render={({ history }) => <Book history={history} />} />
           </div>
         </Router>
       </div>
@@ -40,7 +36,6 @@ class Root extends React.Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchUsers: () => dispatch(fetchUsers()),
-    fetchBooks: () => dispatch(fetchBooks()),
     getLoggedIn: () => dispatch(getLoggedIn())
   }
 }

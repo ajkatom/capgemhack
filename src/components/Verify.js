@@ -2,6 +2,7 @@ import React from 'react';
 import Webcam from 'react-webcam';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import config from '../../config';
 //import DateTime from 'react-datetime';
 
 import { createUser } from '../redux/users';
@@ -51,8 +52,8 @@ class Verify extends React.Component {
       image: imageSrc,
     }, {
         headers: {
-          app_id: '7fe4f3d8',
-          app_key: '8a56adee321afe967bf5d6a2d2b5ecef'
+          app_id: config.kairosId,
+          app_key: config.kairosKey
         }
       }).then((response) => {
         if (response.data.Errors || response.data.images[0].transaction.message === 'no match found') {
@@ -61,8 +62,8 @@ class Verify extends React.Component {
             image: imageSrc,
           }, {
               headers: {
-                app_id: '7fe4f3d8',
-                app_key: '8a56adee321afe967bf5d6a2d2b5ecef'
+                app_id: config.kairosId,
+                app_key: config.kairosKey
               }
             }).then((response) => {
               this.setState({
@@ -95,8 +96,8 @@ class Verify extends React.Component {
       subject_id: this.state.name
     }, {
         headers: {
-          app_id: '7fe4f3d8',
-          app_key: '8a56adee321afe967bf5d6a2d2b5ecef'
+          app_id: config.kairosId,
+          app_key: config.kairosKey
         }
       }).then((response) => {
         if (response.data.images) {
@@ -132,7 +133,6 @@ class Verify extends React.Component {
         }
         this.props.createUser(user);
         this.props.getLoggedIn(user);
-        this.props.history.push('/books');
       })
   }
 
@@ -146,8 +146,8 @@ class Verify extends React.Component {
       gallery_name: "newGallery",
     }, {
         headers: {
-          app_id: '7fe4f3d8',
-          app_key: '8a56adee321afe967bf5d6a2d2b5ecef'
+          app_id: config.kairosId,
+          app_key: config.kairosKey
         }
       }).then((response) => {
         this.setState({
@@ -177,7 +177,7 @@ class Verify extends React.Component {
             <div>
               <div className='text-center mt-5'>
                 <h4>Hello<span className='text-danger'>{gender == 'M' ? ' Sir, ' : ' Ma\'am '}</span>
-                  Welcome to our Hotel</h4>
+                  Welcome </h4>
                 <h4>Please register your name</h4>
               </div>
               <div className='row'>
@@ -236,17 +236,15 @@ class Verify extends React.Component {
   }
 }
 
-const mapStateToProps = ({ users, books }) => {
+const mapStateToProps = ({ users }) => {
   return {
-    users,
-    books
+    users
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     createUser: (user) => dispatch(createUser(user)),
-    createBook: (book) => dispatch(createBook(book)),
     getLoggedIn: (user) => dispatch(getLoggedIn(user)),
     getLogout: () => dispatch(getLogout())
   }
