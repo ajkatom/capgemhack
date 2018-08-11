@@ -1,10 +1,11 @@
 const path = require('path');
 module.exports = {
-  devtool: 'sourcemap',
+  devtool: 'source-map',
   entry: './src/index.js',
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    publicPath: '/dist'
   },
   module: {
     loaders: [
@@ -13,7 +14,7 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'babel-loader',
         query: {
-          presets: ['es2015', 'react']
+          presets: [ 'env', 'react']
         }
       }
     ]
