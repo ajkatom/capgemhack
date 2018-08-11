@@ -1,14 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
+import Video from './Video';
+import Webcam from 'react-webcam';
+import VideoExample from './Video';
 class Welcome extends React.Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      info: false,
-      checkout: false
+      stream: ''
     }
+    this.setRef = this.setRef.bind(this);
+  }
+  setRef(webcam) {
+    this.webcam = webcam;
+  }
+
+  handleUserMedia() {
+    const stream = this.webcam.stream;
+    console.log(stream);
   }
 
   render() {
@@ -21,6 +31,10 @@ class Welcome extends React.Component {
       <div className='container'>
         <div>
           <h4 className='text-center mt-5'>Welcome! {user.name}</h4>
+        </div>
+        <div className='row'>
+          <div className='col-md-4' />
+          <VideoExample />
         </div>
       </div>
     )
