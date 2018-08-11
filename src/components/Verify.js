@@ -3,7 +3,7 @@ import Webcam from 'react-webcam';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import config from '../../config';
-//import DateTime from 'react-datetime';
+
 
 import { createUser } from '../redux/users';
 import { getLoggedIn, getLogout } from '../redux/user';
@@ -46,7 +46,7 @@ class Verify extends React.Component {
     });
 
     const imageSrc = this.webcam.getScreenshot();
-
+    
     axios.post(`https://api.kairos.com/recognize`, {
       gallery_name: "newGallery",
       image: imageSrc,
@@ -133,6 +133,7 @@ class Verify extends React.Component {
         }
         this.props.createUser(user);
         this.props.getLoggedIn(user);
+        this.props.history.push('/welcome');
       })
   }
 
