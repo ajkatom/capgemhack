@@ -1,16 +1,30 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Webcam from 'react-webcam';
+var NotificationSystem = require('react-notification-system');
 
 class Welcome extends React.Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      stream: ''
+      _notificationSystem: {}
     }
     this.setRef = this.setRef.bind(this);
   }
+
+  // _addNotification(ev) {
+  //   ev.preventDefault();
+  //   this.setState(_notificationSystem.addNotification({
+  //     message: 'Notification message',
+  //     level: 'success'
+  //   }))
+  // }
+
+  // componentDidMount() {
+  //   this._notificationSystem = this.refs.notificationSystem;
+  // }
+
   setRef(webcam) {
     this.webcam = webcam;
   }
@@ -51,6 +65,10 @@ class Welcome extends React.Component {
             width={480}
             screenshotQuality={0.2}
           />
+        </div>
+        <div>
+          <button onClick={this._addNotification}>Add notification</button>
+          <NotificationSystem ref="notificationSystem" />
         </div>
       </div>
     )
