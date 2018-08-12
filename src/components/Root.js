@@ -10,6 +10,8 @@ import Verify from './Verify';
 import Welcome from './Welcome';
 import Main from './Main';
 import Chart from './Chart';
+import Home from './Home';
+import Settings from './Settings';
 
 class Root extends React.Component {
   componentDidMount() {
@@ -23,6 +25,7 @@ class Root extends React.Component {
         <Router>
           <div>
             <Nav />
+            <Home />
             <Route exact path="/" component={Main} />
             <Route
               exact
@@ -34,6 +37,7 @@ class Root extends React.Component {
               path="/welcome"
               render={({ history }) => <Welcome history={history} />}
             />
+            <Route exact path="/settings" component={Settings} />
           </div>
         </Router>
       </div>
