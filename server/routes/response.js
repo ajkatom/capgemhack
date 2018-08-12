@@ -10,12 +10,12 @@ router.get('/', (req, res, next) => {
       console.log(typeof req.query.emotion);
       switch (req.query.emotion) {
         case 'HAPPY':
-          response = `<speak>
-          I want to tell you a secret.
-          <amazon:effect name="whispered">I am not a real human.</amazon:effect>.
-          Can you believe it?
-      </speak>`;
-          //response = responses[0].Response;
+          //     response = `<speak>
+          //     I want to tell you a secret.
+          //     <amazon:effect name="whispered">I am not a real human.</amazon:effect>.
+          //     Can you believe it?
+          // </speak>`;
+          response = responses[0].Response;
           break;
         case 'SAD':
           response = responses[1].Response;
@@ -43,11 +43,9 @@ router.get('/', (req, res, next) => {
       </speak>`;
       }
       if (!response)
-        response = `<speak>
-          I want to tell you a secret.
-          <amazon:effect name="whispered">I am not a real human.</amazon:effect>.
-          Can you believe it?
-      </speak>`;
+        response = `<speak><break strength=”x-strong”><emphasis level=”strong”>Hey! 
+      </emphasis></break><emphasis level=”strong”> You sure look happy today!</emphasis>
+       <amazon: effect name="whispered"> Did something interesting happen?</amazon: effect> </speak>`;
       polly(response);
     })
   );
