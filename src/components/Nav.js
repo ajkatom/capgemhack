@@ -13,15 +13,14 @@ class Nav extends React.Component {
           {
             user.id ? <Link className='text-center navbar-brand' activeclassname='active' to='/welcome'>
               <img src='/public/favicon.ico' width='40' height='50' className='mr-3 d-inline-block' />
-              Balance Yoself</Link> : <Link className='text-center navbar-brand' activeclassname='active' to='/'>
+              Sentiment</Link> : <Link className='text-center navbar-brand' activeclassname='active' to='/'>
                 <img src='/public/favicon.ico' width='40' height='50' className='mr-3 d-inline-block' />
-                Balance Yoself</Link>
+                Sentiment</Link>
           }
           <div className='col-md-7' />
           <div className='col-md-3 collapse navbar-collapse justify-content-end'>
             <Link className='nav-link' to='/admin'>
               <button className='btn btn-outline-light my-1'>Stats</button></Link>
-
             {
               user.id ? <div className='row'>
                 <Link className='nav-link' to='/Settings'>
@@ -31,7 +30,7 @@ class Nav extends React.Component {
                 <button onClick={() => this.props.getLogout()} className='btn btn-outline-light my-1'>Logout</button>
                 </Link> </div>:
                 <Link className='nav-link' to='/welcome'>
-                  <button className='btn btn-outline-light my-1'>Emotion</button>
+                  <button className='btn btn-outline-light my-1'>Tracker</button>
                 </Link>
             }
           </div>
