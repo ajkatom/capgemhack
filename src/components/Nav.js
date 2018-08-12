@@ -4,20 +4,19 @@ import { connect } from 'react-redux';
 import { getLogout } from '../redux/user';
 
 class Nav extends React.Component {
-
   render() {
     let { user } = this.props;
     if (!user) user = {};
     return (
       <div>
         <nav className='navbar navbar-expand-lg navbar-dark bg-dark'>
-        {
+          {
             user.id ? <Link className='text-center navbar-brand' activeclassname='active' to='/welcome'>
               <img src='/public/favicon.ico' width='40' height='50' className='mr-3 d-inline-block' />
-              Sentiment</Link> : <Link className='text-center navbar-brand' activeclassname='active' to='/'>
+              Balance Yoself</Link> : <Link className='text-center navbar-brand' activeclassname='active' to='/'>
                 <img src='/public/favicon.ico' width='40' height='50' className='mr-3 d-inline-block' />
-                Sentiment</Link>
-        }
+                Balance Yoself</Link>
+          }
           <div className='col-md-7' />
           <div className='col-md-3 collapse navbar-collapse justify-content-end'>
             <Link className='nav-link' to='/admin'>
@@ -51,7 +50,7 @@ const mapStateToProps = ({ user }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-   getLogout: () => dispatch(getLogout())
+    getLogout: () => dispatch(getLogout())
   }
 }
 
