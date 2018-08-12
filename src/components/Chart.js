@@ -7,11 +7,13 @@ const Chart = () => {
     let draw = document.getElementById('piechart_3d');
     var data = google.visualization.arrayToDataTable([
       ['sentiment', 'Hours per Day'],
-      ['Happy', 11],
-      ['bored', 2],
-      ['Upset', 2],
-      ['Watch TV', 2],
-      ['Sleepy', 7]
+      ['confused', 8],
+      ['angry', 8],
+      ['happy', 2],
+      ['sad', 6],
+      ['calm', 9],
+      ['surprise', 5],
+      ['disgust', 9]
     ]);
 
     var options = {

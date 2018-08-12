@@ -13,9 +13,9 @@ class Verify extends React.Component {
     this.state = this.states(this.props);
     this.setRef = this.setRef.bind(this);
     this.capture = this.capture.bind(this);
-    // this.enroll = this.enroll.bind(this);
-    //  this.onChange = this.onChange.bind(this);
-    // this.delete = this.delete.bind(this);
+    this.enroll = this.enroll.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.delete = this.delete.bind(this);
   }
 
   states(props) {
@@ -42,7 +42,6 @@ class Verify extends React.Component {
     this.setState({
       load: true
     });
-
     const imageSrc = this.webcam.getScreenshot();
     axios
       .post('/api/facedetector', { pic: imageSrc })
@@ -58,120 +57,105 @@ class Verify extends React.Component {
       });
   }
 
-  //   axios.post(`https://api.kairos.com/recognize`, {
-  //     gallery_name: "newGallery",
-  //     image: imageSrc,
-  //   }, {
-  //       headers: {
-  //         app_id: config.kairosId,
-  //         app_key: config.kairosKey
-  //       }
-  //     }).then((response) => {
-  //       if (response.data.Errors || response.data.images[0].transaction.message === 'no match found') {
-  //         axios.post(`https://api.kairos.com/detect`, {
-  //           gallery_name: "newGallery",
-  //           image: imageSrc,
-  //         }, {
-  //             headers: {
-  //               app_id: config.kairosId,
-  //               app_key: config.kairosKey
-  //             }
-  //           }).then((response) => {
-  //             this.setState({
-  //               load: false,
-  //               gender: response.data.images[0].faces[0].attributes.gender.type,
-  //               register: true,
-  //             });
+  enroll() {
+    this.setState({
+      load: true
+    });
 
-  //           })
-  //       } else {
-  //         const faceID = response.data.images[0].transaction.face_id;
-  //         const user = this.props.users.find(user => user.faceId === faceID);
-  //         this.setState({ load: false });
-  //         this.props.getLoggedIn(user);
-  //         this.props.history.push('/welcome');
-  //       }
-  //     });
-  // }
+    const imageSrc = this.webcam.getScreenshot();
 
-  // enroll() {
-  //   this.setState({
-  //     load: true
-  //   });
+    axios
+      .post(
+        `https://api.kairos.com/enroll`,
+        {
+          gallery_name: 'newGallery',
+          image: imageSrc,
+          subject_id: this.state.name
+        },
+        {
+          headers: {
+            app_id: config.kairosId,
+            app_key: config.kairosKey
+          }
+        }
+      )
+      .then(response => {
+        if (response.data.images) {
+          if (response.data.images[0].transaction)
+            var race = [
+              {
+                race: 'asian',
+                value: response.data.images[0].attributes.asian
+              },
+              {
+                race: 'black',
+                value: response.data.images[0].attributes.black
+              },
+              {
+                race: 'hispanic',
+                value: response.data.images[0].attributes.hispanic
+              },
+              { race: 'white', value: response.data.images[0].attributes.asian }
+            ];
 
-  //   const imageSrc = this.webcam.getScreenshot();
+          const tmpRace = race.reduce((current, next) => {
+            if (current.value < next.value) {
+              current = next;
+            }
+            return current;
+          });
 
-  //   axios.post(`https://api.kairos.com/enroll`, {
-  //     gallery_name: "newGallery",
-  //     image: imageSrc,
-  //     subject_id: this.state.name
-  //   }, {
-  //       headers: {
-  //         app_id: config.kairosId,
-  //         app_key: config.kairosKey
-  //       }
-  //     }).then((response) => {
-  //       if (response.data.images) {
-  //         if (response.data.images[0].transaction)
-  //           var race = [
-  //             { race: 'asian', value: response.data.images[0].attributes.asian },
-  //             { race: 'black', value: response.data.images[0].attributes.black },
-  //             { race: 'hispanic', value: response.data.images[0].attributes.hispanic },
-  //             { race: 'white', value: response.data.images[0].attributes.asian },
-  //           ]
+          this.setState({
+            faceId: response.data.images[0].transaction.face_id,
+            load: false,
+            age: response.data.images[0].attributes.age,
+            race: tmpRace.race
+          });
+        }
 
-  //         const tmpRace = race.reduce((current, next) => {
-  //           if (current.value < next.value) {
-  //             current = next;
-  //           }
-  //           return current
-  //         })
+        const user = {
+          name: this.state.name,
+          faceId: this.state.faceId,
+          age: this.state.age,
+          gender: this.state.gender,
+          race: this.state.race
+        };
+        // this.props.createUser(user);
+        //this.props.getLoggedIn(user);
+        this.props.history.push('/welcome');
+      });
+  }
 
-  //         this.setState({
-  //           faceId: response.data.images[0].transaction.face_id,
-  //           load: false,
-  //           age: response.data.images[0].attributes.age,
-  //           race:tmpRace.race
-  //         })
-  //       }
+  delete() {
+    this.setState({
+      load: true
+    });
 
-  //       const user = {
-  //         name: this.state.name,
-  //         faceId: this.state.faceId,
-  //         age: this.state.age,
-  //         gender: this.state.gender,
-  //         race: this.state.race
-  //       }
-  //       this.props.createUser(user);
-  //       this.props.getLoggedIn(user);
-  //       this.props.history.push('/welcome');
-  //     })
-  // }
+    const imageSrc = this.webcam.getScreenshot();
+    axios
+      .post(
+        `https://api.kairos.com/gallery/remove`,
+        {
+          gallery_name: 'newGallery'
+        },
+        {
+          headers: {
+            app_id: config.kairosId,
+            app_key: config.kairosKey
+          }
+        }
+      )
+      .then(response => {
+        this.setState({
+          load: false
+        });
+        this.props.getLogout();
+      });
+  }
 
-  // delete() {
-  //   this.setState({
-  //     load: true
-  //   });
-
-  //   const imageSrc = this.webcam.getScreenshot();
-  //   axios.post(`https://api.kairos.com/gallery/remove`, {
-  //     gallery_name: "newGallery",
-  //   }, {
-  //       headers: {
-  //         app_id: config.kairosId,
-  //         app_key: config.kairosKey
-  //       }
-  //     }).then((response) => {
-  //       this.setState({
-  //         load: false,
-  //       })
-  //       this.props.getLogout();
-  //     }
-  //     )
-  // }
-
-  // onChange(e) {
-  //   this.setState({ [e.target.name]: e.target.value });
+  onChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
 
   render() {
     const { register, name, gender } = this.state;
