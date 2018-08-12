@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import Webcam from 'react-webcam';
 var NotificationSystem = require('react-notification-system');
 import axios from 'axios';
+import Notify from 'notifyjs';
 
 class Welcome extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      stream: '',
       happy: 0,
       sad: 0,
       angry: 0,
@@ -16,15 +16,38 @@ class Welcome extends React.Component {
       disgusted: 0,
       surprised: 0,
       calm: 0,
-      unknown: 0
+      unknown: 0,
+      interval: 0
     }
     this.setRef = this.setRef.bind(this);
     this.capture = this.capture.bind(this);
+    this.doNotification = this.doNotification.bind(this);
     this._notificationSystem = null;
   }
 
   componentDidMount() {
     this._notificationSystem = this.refs.notificationSystem;
+    if (!Notify.needsPermission) {
+    } else if (Notify.isSupported()) {
+      Notify.requestPermission(onPermissionGranted, onPermissionDenied);
+    }
+
+    function onPermissionGranted() {
+      console.log('Permission has been granted by the user');
+    }
+
+    function onPermissionDenied() {
+      console.warn('Permission has been denied by the user');
+    }
+  }
+
+  doNotification(text) {
+    var myNotification = new Notify('Balance Yoself', {
+      body: text,
+      tag: '',
+      timeout: 4
+    });
+    myNotification.show();
   }
 
   setRef(webcam) {
@@ -63,39 +86,51 @@ class Welcome extends React.Component {
           this.setState({ [type]: count });
           if (count > 1 && count % 2 === 0) {
             if (type === 'happy') {
-              this._notificationSystem.addNotification({
-                message: 'Keep up the good mood!',
-                level: 'success'
-              })
+              // this._notificationSystem.addNotification({
+              //   message: 'Keep up the good mood!',
+              //   level: 'success'
+              // })
+              this.doNotification('Keep up the good mood!');
             }
             if (type === 'angry') {
-              this._notificationSystem.addNotification({
-                message: 'Whoa. You should step away to cool off.',
-                level: 'error'
-              })
+              // this._notificationSystem.addNotification({
+              //   message: 'Whoa. You should step away to cool off.',
+              //   level: 'error'
+              // })
+              this.doNotification('Whoa. You should step away to cool off.');
             }
             if (type === 'sad') {
-              this._notificationSystem.addNotification({
-                message: 'Hey, you can get through this!',
-                level: 'warning'
-              })
+              // this._notificationSystem.addNotification({
+              //   message: 'Hey, you can get through this!',
+              //   level: 'warning'
+              // })
+              this.doNotification('Hey, you can get through this!');
             }
             if (type === 'confused') {
-              this._notificationSystem.addNotification({
-                message: 'You may want to pull up Google for that.',
-                level: 'info'
-              })
+              // this._notificationSystem.addNotification({
+              //   message: 'You may want to pull up Google for that.',
+              //   level: 'info'
+              // })
+              this.doNotification('You may want to pull up Google for that.');
+            }
+            if (type === 'calm') {
+              this.doNotification('You are just too chill right now.');
+            }
+            if (type === 'disgusted') {
+              this.doNotification('What is that smell?');
+            }
+            if (type === 'surprised') {
+              this.doNotification('Well, that was quite the surprise.');
             }
           }
         })
       console.log(this.state);
-    }, 3000);
+    }, 2000);
     this.setState({ interval });
   }
 
   render() {
     const { user } = this.props;
-
     if (!user) {
       return null;
     }
@@ -154,4 +189,3 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Welcome);
-
