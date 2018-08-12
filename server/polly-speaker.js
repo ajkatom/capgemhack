@@ -4,8 +4,8 @@ const Speaker = require('speaker');
 
 AWS.config.setPromisesDependency(require('bluebird'));
 AWS.config.update({
-  accessKeyId: 'AKIAI7T4VBZ2BORYUDPA',
-  secretAccessKey: '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'
+  accessKeyId: 'AKIAJUDMCVZBKF22A7TQ',
+  secretAccessKey: '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'
 });
 
 // Create an Polly client
