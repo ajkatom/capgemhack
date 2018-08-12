@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Video from './Video';
 import Webcam from 'react-webcam';
-import VideoExample from './Video';
+
 class Welcome extends React.Component {
 
   constructor(props) {
@@ -16,9 +15,18 @@ class Welcome extends React.Component {
     this.webcam = webcam;
   }
 
-  handleUserMedia() {
-    const stream = this.webcam.stream;
-    console.log(stream);
+  capture() {
+    this.setState({
+      load: true
+    });
+
+    const imageSrc = this.webcam.getScreenshot();
+    axios
+      .post('/api/facedetector', { pic: imageSrc })
+      .then(res => res.data)
+      .then(_faces => {
+        console.log(_faces.FaceDetails[0].Emotions);
+      });
   }
 
   render() {
@@ -34,7 +42,15 @@ class Welcome extends React.Component {
         </div>
         <div className='row'>
           <div className='col-md-4' />
-          <VideoExample />
+          <Webcam
+            audio={false}
+            video={false}
+            height={320}
+            ref={this.setRef}
+            screenshotFormat="image/jpeg"
+            width={480}
+            screenshotQuality={0.2}
+          />
         </div>
       </div>
     )
