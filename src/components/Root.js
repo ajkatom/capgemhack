@@ -12,11 +12,12 @@ import Main from './Main';
 import Chart from './Chart';
 import Home from './Home';
 import Settings from './Settings';
+import Admin from './Admin';
 
 class Root extends React.Component {
   componentDidMount() {
-    this.props.fetchUsers();
-    this.props.getLoggedIn();
+   // this.props.fetchUsers();
+   // this.props.getLoggedIn();
   }
 
   render() {
@@ -29,6 +30,8 @@ class Root extends React.Component {
             <Route exact path="/verify" render={({ history }) => <Verify history={history} />} />
             <Route exact path="/welcome" render={({ history }) => <Welcome history={history} />} />
             <Route exact path="/settings" component={Settings} />
+            <Route exact path="/chart" component={Chart} />
+            <Route exact path='/admin' render={({ history }) => <Admin history={history} />} />
           </div>
         </Router>
       </div>

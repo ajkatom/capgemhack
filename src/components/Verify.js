@@ -2,7 +2,7 @@ import React from 'react';
 import Webcam from 'react-webcam';
 import axios from 'axios';
 import { connect } from 'react-redux';
-// import config from '../../config';
+import config from '../../config';
 
 import { createUser } from '../redux/users';
 import { getLoggedIn, getLogout } from '../redux/user';
@@ -73,7 +73,7 @@ class Verify extends React.Component {
           const faceID = response.data.images[0].transaction.face_id;
           const user = this.props.users.find(user => user.faceId === faceID);
           this.setState({ load: false });
-          this.props.getLoggedIn(user);
+          //this.props.getLoggedIn(user);
           this.props.history.push('/welcome');
         }
       });
@@ -127,8 +127,8 @@ class Verify extends React.Component {
           gender: this.state.gender,
           race: this.state.race
         }
-        this.props.createUser(user);
-        this.props.getLoggedIn(user);
+       // this.props.createUser(user);
+        //this.props.getLoggedIn(user);
         this.props.history.push('/welcome');
       })
   }
