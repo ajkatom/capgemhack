@@ -1,4 +1,5 @@
 const express = require('express');
+const db = require('./db');
 const app = express();
 const path = require('path');
 const port = process.env.PORT || 3002;
@@ -14,8 +15,11 @@ app.use('/public', express.static(path.join(__dirname, '../public')));
 app.use('/vendor', express.static(path.join(__dirname, '../node_modules')));
 app.use('/dist', express.static(path.join(__dirname, '../dist')));
 
-app.get('/', (req, res, next) => res.sendFile(path.join(__dirname, '../public/index.html')));
+app.get('/', (req, res, next) =>
+  res.sendFile(path.join(__dirname, '../public/index.html'))
+);
 
-app.listen(port, (err) => {
+app.listen(port, err => {
   if (err) throw err;
-  console.log(`listening port on ${port}!!!`)});
+  console.log(`listening port on ${port}!!!`);
+});
