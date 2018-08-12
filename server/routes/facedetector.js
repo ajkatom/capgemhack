@@ -2,13 +2,7 @@ const router = require('express').Router();
 const respond = require('../polly-speaker');
 const axios = require('axios');
 const AWS = require('aws-sdk');
-// const Stream = require('stream');
-// const Speaker = require('speaker');
-// AWS.config.setPromisesDependency(require('bluebird'));
-// AWS.config.update({
-//   accessKeyId: 'AKIAISGYKWP46YOGWJJQ',
-//   secretAccessKey: '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'
-// });
+
 const Rekognition = new AWS.Rekognition({
   accessKeyId: 'AKIAIFSKYTZKJYVLLQ5A',
   secretAccessKey: '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',
@@ -19,7 +13,6 @@ router.post('/', (req, res, next) => {
   const { pic } = req.body;
   const base64Image = pic.split(';base64,').pop();
 
-  const image = './out.jpg';
   const params = {
     Image: {
       Bytes: new Buffer(
