@@ -51,7 +51,7 @@ class Verify extends React.Component {
     this.setState({
       load: true
     });
-    const imageSrc = this.webcam.getScreenshot();
+    let imageSrc = this.webcam.getScreenshot();
     axios
       .post('/api/facedetector', { pic: imageSrc })
       .then(res => res.data)
@@ -60,6 +60,7 @@ class Verify extends React.Component {
         console.log(this.state);
       });
     const interval = setInterval(() => {
+      imageSrc = this.webcam.getScreenshot();
       axios
         .post('/api/facedetector', { pic: imageSrc })
         .then(res => res.data)
