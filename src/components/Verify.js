@@ -2,7 +2,7 @@ import React from 'react';
 import Webcam from 'react-webcam';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import config from '../../config';
+// import config from '../../config';
 
 import { createUser } from '../redux/users';
 import { getLoggedIn, getLogout } from '../redux/user';
