@@ -16,10 +16,14 @@ class Nav extends React.Component {
             Sentiment</Link>
           <div className='col-md-8' />
           <div className='col-md-3 collapse navbar-collapse justify-content-end'>
+            <Link className='nav-link' to='/Settings'>
+              <button className='btn btn-outline-light my-1'>Settings</button>
+            </Link>
             {
-              user.id ? <Link className='nav-link' to='/'>
+              user.id ?
+              <Link className='nav-link' to='/'>
                 <button onClick={() => this.props.getLogout()} className='btn btn-outline-light my-1'>Logout</button>
-              </Link> :
+                </Link> :
                 <Link className='nav-link' to='/verify'>
                   <button className='btn btn-outline-light my-1'>Verify</button>
                 </Link>
