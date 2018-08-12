@@ -11,7 +11,6 @@ router.post('/', (req, res, next) => {
   const { pic } = req.body;
   const base64Image = pic.split(';base64,').pop();
 
-  const image = './out.jpg';
   const params = {
     Image: {
       Bytes: new Buffer(
@@ -28,7 +27,7 @@ router.post('/', (req, res, next) => {
 
       return next();
     }
-    console.log(data.FaceDetails[0].Smile);
+    console.log(data.FaceDetails);
     res.send(data);
   });
 });

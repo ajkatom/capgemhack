@@ -1,24 +1,58 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Video from './Video';
 import Webcam from 'react-webcam';
-import VideoExample from './Video';
-class Welcome extends React.Component {
+import axios from 'axios';
 
+class Welcome extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      stream: ''
+      stream: '',
+      happy: 0,
+      sad: 0,
+      angry: 0,
+      confused: 0,
+      disgusted: 0,
+      surprised: 0,
+      calm: 0,
+      unknown: 0
     }
     this.setRef = this.setRef.bind(this);
+    this.capture = this.capture.bind(this);
   }
+
   setRef(webcam) {
     this.webcam = webcam;
   }
 
-  handleUserMedia() {
-    const stream = this.webcam.stream;
-    console.log(stream);
+  capture() {
+    this.setState({
+      load: true
+    });
+    let imageSrc = this.webcam.getScreenshot();
+    axios
+      .post('/api/facedetector', { pic: imageSrc })
+      .then(res => res.data)
+      .then(_faces => {
+        const { Emotions, AgeRange, Eyeglasses } = _faces.FaceDetails[0];
+        console.log(this.state);
+      });
+    const interval = setInterval(() => {
+      imageSrc = this.webcam.getScreenshot();
+      axios
+        .post('/api/facedetector', { pic: imageSrc })
+        .then(res => res.data)
+        .then(_faces => {
+          const { Emotions } = _faces.FaceDetails[0];
+          Emotions.forEach(emotion => {
+            const type = emotion.Type.toLowerCase();
+            const count = this.state[type] + 1;
+            this.setState({ [type]: count });
+          })
+        })
+      console.log(this.state);
+    }, 3000);
+    this.setState({ interval });
   }
 
   render() {
@@ -34,7 +68,33 @@ class Welcome extends React.Component {
         </div>
         <div className='row'>
           <div className='col-md-4' />
-          <VideoExample />
+          <Webcam
+            audio={false}
+            video={false}
+            height={320}
+            ref={this.setRef}
+            screenshotFormat="image/jpeg"
+            width={480}
+            screenshotQuality={0.2}
+          />
+        </div>
+        <div className="col-md-5 float-right">
+          <button
+            onClick={this.capture}
+            className="btn btn-outline-secondary mt-2"
+            type="button"
+          >
+            Activate
+              </button>
+        </div>
+        <div className="col-md-5 float-right">
+          <button
+            onClick={() => clearInterval(this.state.interval)}
+            className="btn btn-outline-secondary mt-2"
+            type="button"
+          >
+            Cancel
+              </button>
         </div>
       </div>
     )
