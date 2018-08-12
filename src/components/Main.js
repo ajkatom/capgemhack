@@ -3,8 +3,9 @@ import React from 'react';
 
 const Main = () => {
   return (
-    <div className='container'>
-      <h4 className='mt-5 text-center'>Welcome</h4>
+    <div className='container text-center'>
+      <h1>Welcome To sentiment</h1>
+      <h2>Keeping your work/life balance and your wellbeing tomorrow</h2>
     </div>
   )
 }
