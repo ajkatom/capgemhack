@@ -1,12 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Webcam from 'react-webcam';
+var NotificationSystem = require('react-notification-system');
 import axios from 'axios';
 
 class Welcome extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      _notificationSystem: {},
       stream: '',
       happy: 0,
       sad: 0,
@@ -20,6 +22,18 @@ class Welcome extends React.Component {
     this.setRef = this.setRef.bind(this);
     this.capture = this.capture.bind(this);
   }
+
+  // _addNotification(ev) {
+  //   ev.preventDefault();
+  //   this.setState(_notificationSystem.addNotification({
+  //     message: 'Notification message',
+  //     level: 'success'
+  //   }))
+  // }
+
+  // componentDidMount() {
+  //   this._notificationSystem = this.refs.notificationSystem;
+  // }
 
   setRef(webcam) {
     this.webcam = webcam;
