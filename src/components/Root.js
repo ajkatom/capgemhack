@@ -25,18 +25,9 @@ class Root extends React.Component {
         <Router>
           <div>
             <Nav />
-            <Home />
             <Route exact path="/" component={Main} />
-            <Route
-              exact
-              path="/verify"
-              render={({ history }) => <Verify history={history} />}
-            />
-            <Route
-              exact
-              path="/welcome"
-              render={({ history }) => <Welcome history={history} />}
-            />
+            <Route exact path="/verify" render={({ history }) => <Verify history={history} />} />
+            <Route exact path="/welcome" render={({ history }) => <Welcome history={history} />} />
             <Route exact path="/settings" component={Settings} />
           </div>
         </Router>

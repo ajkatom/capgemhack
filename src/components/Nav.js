@@ -11,15 +11,24 @@ class Nav extends React.Component {
     return (
       <div>
         <nav className='navbar navbar-expand-lg navbar-dark bg-dark'>
-          <Link className='text-center navbar-brand' activeclassname='active' to='/'>
-            <img src='/public/favicon.ico' width='40' height='50' className='mr-3 d-inline-block' />
-            Sentiment</Link>
-          <div className='col-md-8' />
+        {
+            user.id ? <Link className='text-center navbar-brand' activeclassname='active' to='/welcome'>
+              <img src='/public/favicon.ico' width='40' height='50' className='mr-3 d-inline-block' />
+              Sentiment</Link> : <Link className='text-center navbar-brand' activeclassname='active' to='/'>
+                <img src='/public/favicon.ico' width='40' height='50' className='mr-3 d-inline-block' />
+                Sentiment</Link>
+        }
+          <div className='col-md-7' />
           <div className='col-md-3 collapse navbar-collapse justify-content-end'>
+
             {
-              user.id ? <Link className='nav-link' to='/'>
+              user.id ? <div className='row'>
+                <Link className='nav-link' to='/Settings'>
+                  <button className='btn btn-outline-light my-1'>Settings</button>
+                </Link>
+              <Link className='nav-link' to='/'>
                 <button onClick={() => this.props.getLogout()} className='btn btn-outline-light my-1'>Logout</button>
-              </Link> :
+                </Link> </div>:
                 <Link className='nav-link' to='/verify'>
                   <button className='btn btn-outline-light my-1'>Verify</button>
                 </Link>
