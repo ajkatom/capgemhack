@@ -1,13 +1,21 @@
 const router = require('express').Router();
+const respond = require('../polly-speaker');
+const axios = require('axios');
 const AWS = require('aws-sdk');
+// const Stream = require('stream');
+// const Speaker = require('speaker');
+// AWS.config.setPromisesDependency(require('bluebird'));
+// AWS.config.update({
+//   accessKeyId: 'AKIAISGYKWP46YOGWJJQ',
+//   secretAccessKey: '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'
+// });
 const Rekognition = new AWS.Rekognition({
-  accessKeyId: 'AKIAJUDMCVZBKF22A7TQ',
-  secretAccessKey: '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',
+  accessKeyId: 'AKIAIFSKYTZKJYVLLQ5A',
+  secretAccessKey: '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',
   region: 'us-east-2'
 });
 //AWS.config.region = 'us-east-2';
 router.post('/', (req, res, next) => {
-  console.log('ok');
   const { pic } = req.body;
   const base64Image = pic.split(';base64,').pop();
 
@@ -28,8 +36,17 @@ router.post('/', (req, res, next) => {
 
       return next();
     }
-    console.log(data.FaceDetails[0].Smile);
-    res.send(data);
+
+    let score = 0;
+    const emotion = data.FaceDetails[0].Emotions.filter(val => {
+      let type = '';
+      if (val.Confidence > score) {
+        score = val.Confidence;
+        return true;
+      }
+      return false;
+    });
+    res.send(emotion);
   });
 });
 

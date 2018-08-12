@@ -47,9 +47,14 @@ class Verify extends React.Component {
     axios
       .post('/api/facedetector', { pic: imageSrc })
       .then(res => res.data)
-      .then(_faces => {
-        const { Emotions, AgeRange, Eyeglasses } = _faces.FaceDetails[0];
-        console.log(Emotions, AgeRange, Eyeglasses);
+      .then(emotion => {
+        // const { Emotions, AgeRange, Eyeglasses } = _faces.FaceDetails[0];
+        console.log(emotion);
+        axios.get('/api/response', {
+          params: {
+            emotion: emotion[0].Type
+          }
+        });
       });
   }
 
