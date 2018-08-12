@@ -20,6 +20,7 @@
         "express": "^4.16.3",
         "install": "^0.12.1",
         "nodemailer": "^4.6.7",
+        "notifyjs": "^3.0.0",
         "npm": "^6.3.0",
         "pg": "^7.4.1",
         "react": "^16.2.0",
@@ -30,9 +31,9 @@
         "react-router-dom": "^4.2.2",
         "react-webcam": "^0.2.0",
         "reactstrap": "^6.3.1",
+        "recharts": "^1.0.0-beta.10",
         "redux": "^3.7.2",
         "redux-thunk": "^2.2.0",
-        "recharts": "^1.0.0-beta.10",
         "sequelize": "^4.35.1",
         "speaker": "^0.4.1",
         "stream": "0.0.2"
