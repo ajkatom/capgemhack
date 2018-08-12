@@ -19,13 +19,12 @@ router.post('/', (req, res, next) => {
     },
     Attributes: ['ALL']
   };
-
   Rekognition.detectFaces(params, (err, data) => {
     if (err) {
       console.log(err);
       return next();
     }
-    console.log(data.FaceDetails[0].Smile);
+    console.log(data.FaceDetails[0].Emotions);
     res.send(data);
   });
 });
