@@ -1,29 +1,17 @@
 const Sequelize = require('sequelize');
 
-// const conn = new Sequelize(
-//   'postgresql://emotiondb.cmxtj7pruf8o.us-east-1.rds.amazonaws.com/emotionDB',
-//   'WonBot',
-//   'socialhack',
-//   {
-//     define: {
-//       underscored: true
-//     },
-//     dialect: 'postgres'
-//     'postgres://user:pass@example.com:5432/dbname'
-//     //logging: false
-//   }
-// );
 const conn = new Sequelize(
-  'postgresql://WonBot:socialhack@emotiondb.cmxtj7pruf8o.us-east-1.rds.amazonaws.com/emotionDB',
+  'postgresql://AJ:q1w2e3r4t5y6@emotionaldb.c31klho6donj.us-west-2.rds.amazonaws.com/emotionaldb',
   {
     define: {
       underscored: true
     },
-    maxConcurrentQueries: 100,
+    maxConcurrentQueries: 1000,
     dialect: 'postgres',
     dialectOptions: {
       ssl: 'Amazon RDS'
-    }
+    },
+    logging: false
   }
 );
 conn

@@ -1,5 +1,14 @@
 const router = require('express').Router();
+const respond = require('../polly-speaker');
+const axios = require('axios');
 const AWS = require('aws-sdk');
+// const Stream = require('stream');
+// const Speaker = require('speaker');
+// AWS.config.setPromisesDependency(require('bluebird'));
+// AWS.config.update({
+//   accessKeyId: 'AKIA_REMOVED',
+//   secretAccessKey: 'REMOVED'
+// });
 const Rekognition = new AWS.Rekognition({
   accessKeyId: 'AKIA_REMOVED',
   secretAccessKey: 'REMOVED',
@@ -7,7 +16,6 @@ const Rekognition = new AWS.Rekognition({
 });
 //AWS.config.region = 'us-east-2';
 router.post('/', (req, res, next) => {
-  console.log('ok');
   const { pic } = req.body;
   const base64Image = pic.split(';base64,').pop();
 
@@ -28,8 +36,17 @@ router.post('/', (req, res, next) => {
 
       return next();
     }
-    console.log(data.FaceDetails[0].Smile);
-    res.send(data);
+
+    let score = 0;
+    const emotion = data.FaceDetails[0].Emotions.filter(val => {
+      let type = '';
+      if (val.Confidence > score) {
+        score = val.Confidence;
+        return true;
+      }
+      return false;
+    });
+    res.send(emotion);
   });
 });
 
