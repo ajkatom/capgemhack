@@ -20,17 +20,7 @@ class Welcome extends React.Component {
     }
     this.setRef = this.setRef.bind(this);
     this.capture = this.capture.bind(this);
-    this._addNotification = this._addNotification.bind(this);
     this._notificationSystem = null;
-  }
-
-
-  _addNotification(ev) {
-    ev.preventDefault();
-    this._notificationSystem.addNotification({
-      message: 'Notification message',
-      level: 'success'
-    })
   }
 
   componentDidMount() {
@@ -60,11 +50,43 @@ class Welcome extends React.Component {
         .then(res => res.data)
         .then(_faces => {
           const { Emotions } = _faces.FaceDetails[0];
+          let confident;
+          let most = -Infinity;
           Emotions.forEach(emotion => {
-            const type = emotion.Type.toLowerCase();
-            const count = this.state[type] + 1;
-            this.setState({ [type]: count });
+            if (emotion.Confidence > most) {
+              most = emotion.Confidence;
+              confident = emotion.Type;
+            }
           })
+          const type = confident.toLowerCase();
+          const count = this.state[type] + 1;
+          this.setState({ [type]: count });
+          if (count > 1 && count % 2 === 0) {
+            if (type === 'happy') {
+              this._notificationSystem.addNotification({
+                message: 'Keep up the good mood!',
+                level: 'success'
+              })
+            }
+            if (type === 'angry') {
+              this._notificationSystem.addNotification({
+                message: 'Whoa. You should step away to cool off.',
+                level: 'error'
+              })
+            }
+            if (type === 'sad') {
+              this._notificationSystem.addNotification({
+                message: 'Hey, you can get through this!',
+                level: 'warning'
+              })
+            }
+            if (type === 'confused') {
+              this._notificationSystem.addNotification({
+                message: 'You may want to pull up Google for that.',
+                level: 'info'
+              })
+            }
+          }
         })
       console.log(this.state);
     }, 3000);
@@ -97,22 +119,21 @@ class Welcome extends React.Component {
         <div className="col-md-5 float-right">
           <button
             onClick={this.capture}
-            className="btn btn-outline-secondary mt-2"
+            className="btn btn-outline-success mt-2"
             type="button"
           >
             Activate
               </button>
         </div>
-        <div className="col-md-5 float-right">
+        <div className="col-md-5 float-left">
           <button
             onClick={() => clearInterval(this.state.interval)}
-            className="btn btn-outline-secondary mt-2"
+            className="btn btn-outline-warning mt-2"
             type="button"
           >
-            Cancel
+            Stop
               </button>
         </div>
-        <button onClick={this._addNotification}>Add notification</button>
         <NotificationSystem ref="notificationSystem" />
       </div>
     )
