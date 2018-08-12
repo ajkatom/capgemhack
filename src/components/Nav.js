@@ -11,9 +11,13 @@ class Nav extends React.Component {
     return (
       <div>
         <nav className='navbar navbar-expand-lg navbar-dark bg-dark'>
-          <Link className='text-center navbar-brand' activeclassname='active' to='/'>
-            <img src='/public/favicon.ico' width='40' height='50' className='mr-3 d-inline-block' />
-            Sentiment</Link>
+        {
+            user.id ? <Link className='text-center navbar-brand' activeclassname='active' to='/welcome'>
+              <img src='/public/favicon.ico' width='40' height='50' className='mr-3 d-inline-block' />
+              Sentiment</Link> : <Link className='text-center navbar-brand' activeclassname='active' to='/'>
+                <img src='/public/favicon.ico' width='40' height='50' className='mr-3 d-inline-block' />
+                Sentiment</Link>
+        }
           <div className='col-md-7' />
           <div className='col-md-3 collapse navbar-collapse justify-content-end'>
 
