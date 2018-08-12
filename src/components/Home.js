@@ -5,9 +5,7 @@ import { Link } from 'react-router-dom';
 const Home = () => {
   return (
     <div className="home">
-      <div className="text">
-        <h1>Welcome To sentiment</h1>
-        <h2>Keeping your work/life balance and your wellbeing tomorrow</h2>
+      <div className="row">
         <div>
           <Link to="#">
             <button className="btn btn-outline-secondary">Activate</button>
