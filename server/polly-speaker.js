@@ -21,24 +21,16 @@ const Player = new Speaker({
   sampleRate: 16000
 });
 const text = `<speak>
-    Here is a number <w role="amazon:VBD">read</w> 
-    as a cardinal number: 
-    <say-as interpret-as="cardinal">12345</say-as>. 
-    Here is a word spelled out: 
-    <say-as interpret-as="spell-out">hello</say-as>. 
-</speak>`;
-// let params = {
-//   Text: text,
-//   OutputFormat: 'pcm',
-//   VoiceId: 'Kimberly',
-//   SpeechMarkTypes: ['ssml'],
-//   TextType: 'ssml'
-// };
+    I want to tell you a secret. 
+    <amazon:effect name="whispered">I am not a real human.</amazon:effect>.
+    Can you believe it?
+</speak>
+`;
+
 let params = {
   OutputFormat: 'pcm',
   VoiceId: 'Kimberly',
-  Text: '<speak>Hi, my name is @anaptfox.</speak>',
-  SpeechMarkTypes: ['ssml'],
+  Text: text,
   TextType: 'ssml'
 };
 
