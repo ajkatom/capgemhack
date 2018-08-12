@@ -8,7 +8,6 @@ class Welcome extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      _notificationSystem: {},
       stream: '',
       happy: 0,
       sad: 0,
@@ -21,19 +20,22 @@ class Welcome extends React.Component {
     }
     this.setRef = this.setRef.bind(this);
     this.capture = this.capture.bind(this);
+    this._addNotification = this._addNotification.bind(this);
+    this._notificationSystem = null;
   }
 
-  // _addNotification(ev) {
-  //   ev.preventDefault();
-  //   this.setState(_notificationSystem.addNotification({
-  //     message: 'Notification message',
-  //     level: 'success'
-  //   }))
-  // }
 
-  // componentDidMount() {
-  //   this._notificationSystem = this.refs.notificationSystem;
-  // }
+  _addNotification(ev) {
+    ev.preventDefault();
+    this._notificationSystem.addNotification({
+      message: 'Notification message',
+      level: 'success'
+    })
+  }
+
+  componentDidMount() {
+    this._notificationSystem = this.refs.notificationSystem;
+  }
 
   setRef(webcam) {
     this.webcam = webcam;
@@ -110,6 +112,8 @@ class Welcome extends React.Component {
             Cancel
               </button>
         </div>
+        <button onClick={this._addNotification}>Add notification</button>
+        <NotificationSystem ref="notificationSystem" />
       </div>
     )
   }
