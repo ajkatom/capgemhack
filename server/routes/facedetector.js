@@ -5,12 +5,10 @@ const Rekognition = new AWS.Rekognition({
   secretAccessKey: 'REMOVED',
   region: 'us-east-2'
 });
-//AWS.config.region = 'us-east-2';
 router.post('/', (req, res, next) => {
   console.log('ok');
   const { pic } = req.body;
   const base64Image = pic.split(';base64,').pop();
-
   const image = './out.jpg';
   const params = {
     Image: {
@@ -25,7 +23,6 @@ router.post('/', (req, res, next) => {
   Rekognition.detectFaces(params, (err, data) => {
     if (err) {
       console.log(err);
-
       return next();
     }
     console.log(data.FaceDetails[0].Smile);

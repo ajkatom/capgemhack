@@ -2,7 +2,7 @@ import React from 'react';
 import Webcam from 'react-webcam';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import config from '../../config';
+// import config from '../../config';
 
 import { createUser } from '../redux/users';
 import { getLoggedIn, getLogout } from '../redux/user';
@@ -14,7 +14,7 @@ class Verify extends React.Component {
     this.setRef = this.setRef.bind(this);
     this.capture = this.capture.bind(this);
     // this.enroll = this.enroll.bind(this);
-    //  this.onChange = this.onChange.bind(this);
+    // this.onChange = this.onChange.bind(this);
     // this.delete = this.delete.bind(this);
   }
 
@@ -26,7 +26,16 @@ class Verify extends React.Component {
       faceId: '',
       age: 0,
       gender: '',
-      race: ''
+      race: '',
+      state: 0,
+      happy: 0,
+      sad: 0,
+      angry: 0,
+      confused: 0,
+      disgusted: 0,
+      surprised: 0,
+      calm: 0,
+      unknown: 0
     };
   }
 
@@ -42,15 +51,29 @@ class Verify extends React.Component {
     this.setState({
       load: true
     });
-
     const imageSrc = this.webcam.getScreenshot();
     axios
       .post('/api/facedetector', { pic: imageSrc })
       .then(res => res.data)
       .then(_faces => {
         const { Emotions, AgeRange, Eyeglasses } = _faces.FaceDetails[0];
-        console.log(Emotions, AgeRange, Eyeglasses);
+        console.log(this.state);
       });
+    const interval = setInterval(() => {
+      axios
+        .post('/api/facedetector', { pic: imageSrc })
+        .then(res => res.data)
+        .then(_faces => {
+          const { Emotions } = _faces.FaceDetails[0];
+          Emotions.forEach(emotion => {
+            const type = emotion.Type.toLowerCase();
+            const count = this.state[type] + 1;
+            this.setState({[type]: count});
+          })
+        })
+        console.log(this.state);
+    }, 3000);
+    this.setState({ interval });
   }
 
   //   axios.post(`https://api.kairos.com/recognize`, {
@@ -170,16 +193,15 @@ class Verify extends React.Component {
 
   render() {
     const { register, name, gender } = this.state;
-    console.log(this.state);
     return (
       <div className="container-fluid">
-        <button
+        {/* <button
           onClick={this.delete}
           className="input-group-append btn btn-outline-secondary"
           type="button"
         >
           delete
-        </button>
+        </button> */}
         {register ? (
           <div>
             <div className="text-center mt-5">
@@ -204,33 +226,42 @@ class Verify extends React.Component {
             </div>
           </div>
         ) : (
-          <div>
-            <div className="text-center">
-              <h3>Verify</h3>
-            </div>
-            <div className="row">
-              <div className="col-md-4" />
-              <Webcam
-                audio={false}
-                video={false}
-                height={320}
-                ref={this.setRef}
-                screenshotFormat="image/jpeg"
-                width={480}
-                screenshotQuality={0.2}
-              />
-            </div>
-            <div className="col-md-5 float-right">
-              <button
-                onClick={this.capture}
-                className="btn btn-outline-secondary mt-2"
-                type="button"
-              >
-                Verify
+            <div>
+              <div className="text-center">
+                <h3>Capture</h3>
+              </div>
+              <div className="row">
+                <div className="col-md-4" />
+                <Webcam
+                  audio={false}
+                  video={false}
+                  height={320}
+                  ref={this.setRef}
+                  screenshotFormat="image/jpeg"
+                  width={480}
+                  screenshotQuality={0.2}
+                />
+              </div>
+              <div className="col-md-5 float-right">
+                <button
+                  onClick={this.capture}
+                  className="btn btn-outline-secondary mt-2"
+                  type="button"
+                >
+                  Activate
               </button>
+              </div>
+              <div className="col-md-5 float-right">
+                <button
+                  onClick={() => clearInterval(this.state.interval)}
+                  className="btn btn-outline-secondary mt-2"
+                  type="button"
+                >
+                  Cancel
+              </button>
+              </div>
             </div>
-          </div>
-        )}
+          )}
       </div>
     );
   }

@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { getLogout } from '../redux/user';
 
 class Nav extends React.Component {
-
   render() {
     let { user } = this.props;
     if (!user) user = {};
