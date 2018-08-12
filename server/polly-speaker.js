@@ -4,8 +4,8 @@ const Speaker = require('speaker');
 
 AWS.config.setPromisesDependency(require('bluebird'));
 AWS.config.update({
-  accessKeyId: 'AKIAJUDMCVZBKF22A7TQ',
-  secretAccessKey: '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'
+  accessKeyId: 'AKIAJ5BIIJJXJ6NPCZ5A',
+  secretAccessKey: 'ysjh1IoxEUvHtnxIYm8TW6WlnEX8skGfoG+7V0Q9',
 });
 
 // Create an Polly client
@@ -21,7 +21,7 @@ const Player = new Speaker({
   sampleRate: 16000
 });
 const text = `<speak>
-    I want to tell you a secret. 
+    I want to tell you a secret.
     <amazon:effect name="whispered">I am not a real human.</amazon:effect>.
     Can you believe it?
 </speak>

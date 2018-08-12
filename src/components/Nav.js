@@ -20,6 +20,8 @@ class Nav extends React.Component {
         }
           <div className='col-md-7' />
           <div className='col-md-3 collapse navbar-collapse justify-content-end'>
+            <Link className='nav-link' to='/admin'>
+              <button className='btn btn-outline-light my-1'>Stats</button></Link>
 
             {
               user.id ? <div className='row'>
@@ -29,8 +31,8 @@ class Nav extends React.Component {
               <Link className='nav-link' to='/'>
                 <button onClick={() => this.props.getLogout()} className='btn btn-outline-light my-1'>Logout</button>
                 </Link> </div>:
-                <Link className='nav-link' to='/verify'>
-                  <button className='btn btn-outline-light my-1'>Verify</button>
+                <Link className='nav-link' to='/welcome'>
+                  <button className='btn btn-outline-light my-1'>Emotion</button>
                 </Link>
             }
           </div>

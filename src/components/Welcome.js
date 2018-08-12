@@ -70,45 +70,35 @@ class Welcome extends React.Component {
   }
 
   render() {
-    const { user } = this.props;
-
-    if (!user) {
-      return null;
-    }
+   // const { user } = this.props;
     return (
       <div className='container'>
         <div>
-          <h4 className='text-center mt-5'>Welcome! {user.name}</h4>
+
         </div>
         <div className='row'>
-          <div className='col-md-4' />
+          <div className='col-md-3' />
           <Webcam
             audio={false}
             video={false}
-            height={320}
+            height={520}
             ref={this.setRef}
             screenshotFormat="image/jpeg"
-            width={480}
+            width={600}
             screenshotQuality={0.2}
           />
         </div>
         <div className="col-md-5 float-right">
           <button
             onClick={this.capture}
-            className="btn btn-outline-secondary mt-2"
+            className="btn btn-outline-secondary mr-2"
             type="button"
-          >
-            Activate
-              </button>
-        </div>
-        <div className="col-md-5 float-right">
+          >Activate</button>
           <button
             onClick={() => clearInterval(this.state.interval)}
-            className="btn btn-outline-secondary mt-2"
+            className="btn mr-4 btn-outline-secondary"
             type="button"
-          >
-            Cancel
-              </button>
+          >Cancel</button>
         </div>
       </div>
     )
@@ -118,7 +108,7 @@ class Welcome extends React.Component {
 
 const mapStateToProps = ({ user }) => {
   return {
-    user
+  //  user
   };
 };
 
