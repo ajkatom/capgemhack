@@ -130,7 +130,7 @@ class Welcome extends React.Component {
   }
 
   render() {
-   // const { user } = this.props;
+    // const { user } = this.props;
     return (
       <div className='container'>
         <div>
@@ -158,7 +158,7 @@ class Welcome extends React.Component {
             onClick={() => clearInterval(this.state.interval)}
             className="btn mr-4 btn-outline-warning"
             type="button"
-          >Cancel</button>
+          >Stop</button>
         </div>
         <NotificationSystem ref="notificationSystem" />
       </div>
@@ -169,7 +169,7 @@ class Welcome extends React.Component {
 
 const mapStateToProps = ({ user }) => {
   return {
-  //  user
+    //  user
   };
 };
 
