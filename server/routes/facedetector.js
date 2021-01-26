@@ -1,8 +1,8 @@
 const router = require('express').Router();
 const AWS = require('aws-sdk');
 const Rekognition = new AWS.Rekognition({
-  accessKeyId: 'AKIAJ5BIIJJXJ6NPCZ5A',
-  secretAccessKey: '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',
+  accessKeyId: 'key goes here',
+  secretAccessKey: 'secret goes here',
   region: 'us-east-2'
 });
 //AWS.config.region = 'us-east-2';
